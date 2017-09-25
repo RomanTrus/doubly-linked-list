@@ -6,20 +6,19 @@ class LinkedList {
     	this._head=null;
     	this._tail=null;
     	this.linkedlist=[];
-    	
-    	
+
+
     }
 
     append(data) {
     	var node=new Node(data);
-
     	if (this.length==0) {
     		this._head=node;
     		this._tail=node;
 		}
-		
+
 		else {this.linkedlist[this.length-1].next=node;
-			node.prev=this.linkedlist[this.length];
+			node.prev=this.linkedlist[this.linkedlist.length-1];
 		}
 
 		this.linkedlist.push(node);
@@ -37,7 +36,7 @@ class LinkedList {
     		return(this.linkedlist[0].data);
     	}
         else {return(null)};
-       
+
     }
 
     tail() {
@@ -57,9 +56,15 @@ class LinkedList {
 
     insertAt(index, data) {
     	if (this.length!=0) {
-    		this.linkedlist[index].data=data;
-    	} else {this.append(data)}
-        return(this) 
+        var temp=this.linkedlist.slice(index);
+        this.linkedlist=this.linkedlist.slice(0,index);
+        this.length=index;
+        this.append(data);
+        temp.forEach((value)=>{this.append(value.data)})
+
+    } else {this.append(data)}
+
+        return(this)
 
     }
 
@@ -86,7 +91,7 @@ class LinkedList {
             this.linkedlist[index].prev=this.linkedlist[index-1];
             this.length--;
         }
-      
+
         return(this)
 
     }
